@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href="css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="css/jquery-ui.css">
+<body>
+    <div id="worldmap_div" title="TA1 International Meetings">
+        <svg id="worldmap">
+        </svg>
+    </div>
+    <div id="usmap_div" title="TA1 National Meetings">
+        <svg id="usmap">
+        </svg>
+    </div>
+    <div id="print_div" title="TA1 National Meetings">
+        <svg id="print">
+        </svg>
+    </div>
+    <div id="web_div" title="TA1 National Meetings">
+        <svg id="web">
+        </svg>
+    </div>
+    <div class="container">
+        <div class="header">
+            <!-- <label class="logo">Logo Placeholder</label> -->
+            <div class="logo">
+                <img src="img/logo.png" width="80" height="80"/>
+            </div>
+            <label class="date">January-June, 2016</label>
+        </div>
+        <div class="tab">
+            <label class="total_ta">TOTAL</label>
+            <label class="margin_tab ta1">TA1</label>
+            <label class="margin_tab ta2">TA2</label>
+            <label class="margin_tab ta3">TA3</label>
+            <label class="margin_tab ta4">TA4</label>
+            <label class="margin_tab ta5">TA5</label>
+        </div>
+        <div class="row row1">
+            <div class="graph_div">
+                <div class="title">
+                    <label>Number of Grants</label>
+                </div>
+                <div class="chart_div">
+                    <svg id="number_of_grants_requested">
+                        <g class="charts"></g>
+                        <g class="txt"></g>
+                    </svg>
+                    <svg id="number_of_grants_approved">
+                        <g class="charts"></g>
+                        <g class="txt"></g>
+                    </svg>
+                </div>
+            </div>
+            <div class="graph_div margin_tab">
+                <div class="title">
+                    <label>Funds</label>
+                </div>
+                <svg id="funds_requested">
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+                <svg id="funds_approved">
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+                <svg id="funds_right">
+                </svg>
+            </div>
+        </div>
+        <div class="row row2">
+            <div class="graph_div graph_div1">
+                <div class="title">
+                    <label>Supported Activities by Type</label>
+                </div>
+                <svg id="supported_left">
+                </svg>
+                <svg id="supported_live">
+                    <g class="bigrect"></g>
+                    <g class="smallrect"></g>
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+                <svg id="supported_print">
+                    <g class="bigrect"></g>
+                    <g class="smallrect"></g>
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+                <svg id="supported_web">
+                    <g class="bigrect"></g>
+                    <g class="smallrect"></g>
+                    <g class="charts"></g>
+                    <g class="triangle"></g>
+                    <g class="txt"></g>
+                </svg>
+            </div>
+            <div class="graph_div margin_tab graph_div2">
+                <div class="title">
+                    <label>Audience</label>
+                </div>
+                <svg id="audience">
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+            </div>
+        </div>
+        <div class="row row3">
+            <div class="graph_div">
+                <div class="title">
+                    <label>Patient Impact</label>
+                </div>
+                <svg id="patient">
+                    <g class="smallcircle"></g>
+                    <g class="semicircle"></g>
+                    <g class="txt"></g>
+                </svg>
+            </div>
+            <div class="graph_div margin_tab">
+                <div class="title">
+                    <label>Grant #s Reaching Outcome Level</label>
+                </div>
+                <svg id="grant">
+                    <g class="bigrect"></g>
+                    <g class="smallrect"></g>
+                    <g class="triangle"></g>
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+            </div>
+            <div class="graph_div margin_tab">
+                <div class="title">
+                    <label>Funds Supported by Provider Type</label>
+                </div>
+                <svg id="fund_supported">
+                    <g class="bigrect"></g>
+                    <g class="smallrect"></g>
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+            </div>
+        </div>
+        <div class="row row4">
+            <div class="graph_div">
+                <div class="title">
+                    <label>Learners By Location</label>
+                </div>
+                <svg id='learners' width='300' height='200'>
+                </svg>
+            </div>
+            <div class="graph_div margin_tab">
+                <div class="title">
+                    <label>Funds by TA Learning Objective</label>
+                </div>
+                <svg id="funds_ta_left">
+                </svg>
+                <svg id="funds_ta_requested">
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+                <svg id="funds_ta_approved">
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+            </div>
+            <div class="graph_div margin_tab">
+                <div class="title">
+                    <label>NQS Prioritization</label>
+                </div>
+                <svg id="nqs">
+                    <g class="bigrect"></g>
+                    <g class="charts"></g>
+                    <g class="txt"></g>
+                </svg>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/d3.v3.min.js"></script>
+<!-- <script src="js/topojson.v1.min.js"></script> -->
+<script src="js/topojson.v0.min.js"></script>
+<script>
+    var TabColors = ['#57585b','#df6135','#1f3961','#3c8ebc','#7cae53','#972b37'];
+    var NonColors = ['#9f9f9f','#eba086','#738fab','#92cfdd','#c2daa2','#d67d93'];
+    var PrintColors = ['#929497','#e27f5b','#3d587b','#65b6cf','#a0c97a','#b04c5f'];
+    var AudienceColors = [['#2b2829','#808285','#a7a9ac','#d1d2d3'],
+                          ['#df6135','#e27d56','#ecad8e','#f0cec2','#807e7e','#414141'],
+                          ['#1f3961','#3c587b','#738fab','#bcd3ec','#807e7e','#414141'],
+                          ['#2d6e85','#3c8ebc','#65b6cf','#92cfdd','#807e7e','#414141'],
+                          ['#598c4a','#7cae53','#a0c97a','#c2daa2','#807e7e','#414141'],
+                          ['#721b24','#972b37','#b04c5f','#d67d93','#807e7e','#414141']];
+    var GrantColors = [['#e5e6e7','#d1d2d3','#a7a9ac','#929497','#6c6d70','#57585b','#403f40','#403f40'],
+                        ['#181818','#414141','#807e7e','#cfcece','#f0cec2','#ecad8e','#e27d56','#de5c2e'],
+                        ['#181818','#414141','#807e7e','#cfcece','#bcd3ec','#738fab','#3d587b','#1f3961'],
+                        ['#181818','#414141','#807e7e','#cfcece','#92cfdd','#65b6cf','#3c8ebc','#2d6e85'],
+                        ['#181818','#414141','#807e7e','#cfcece','#c2daa2','#a0c97a','#7cae53','#598c4a'],
+                        ['#181818','#414141','#807e7e','#cfcece','#d67d93','#b04c5f','#972b37','#741e27']];
+    var defaultTabColor = '#b1b3b3';
+    var WindowResizeFlag = 1;
+    var tabIndex = 0;
+    var SupportedText = ['Live','Print','Web'];
+    var SupportedEachText = ['International','National','Regional','Local','Journal Supplement','Direct Mail','Other','Live','Archive','Interactive'];
+    var Participant_sees = 1,Average = 15, new_patients = 20;
+    var PatientStr = ['appropriate patients potentially reached','total participants','Average','new partients per week','participant sees'];
+    var GrantStr = ['Qulity Improvement','Community Health','Patient Health','Peformance','Competence','Learning','Satisfaction','Participation'];
+    var BtnStr = ['All','CGN','Non Solicited'];
+    var FundSupportedStr = ['Hospitals','Academic','MECCs','Societies','Accredited Organizations','Foundations','National / Regional Associations','Other'];
+    var NqsStr = ['Safety','Prevention & treatment','Communication & cordination','Community best practices','Engagement','Affordable'];
+    var NqsBodyStr = ['by $ amount','by # of grants'];
+    var NqsInd = 0;
+    var GrantInd = 0;
+    var garphDivWidth2,graphDivHeight;
+    var ObjectStr = ['Excepteur sint occaecat oupidatat','Sunt in culpa qui officia deserunt','reprehenderit in voluptate velit esse',
+                     'Excepteur sint occasecat oupidatat','Sunt in culpa qui officia deserunt'];
+    var stateIdValues = [4000,3000,2000,1000,500];
+    var FundRightInd = 0;
+    var containerWidth,containerHeight;
+    var listStr = ['Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
+                    'Aliquam tincidunt mauris eu risus.',
+                    'Vestibulum auctor dapibus neque.',
+                    'Nunc dignissim risus id metus.',
+                    'Cras ornare tristique elit.',
+                    'Vivamus vestibulum nulla nec ante.',
+                    'Praesent placerat risus quis eros.',
+                    'Fusce pellentesque suscipit nibh.',
+                    'Integer vitae libero ac risus egestas placerat.',
+                    'Vestibulum commodo felis quis tortor.',
+                    'Ut aliquam sollicitudin leo.',
+                    'Cras iaculis ultricies nulla.',
+                    'Donec quis dui at dolor tempor interdum.',
+                    'Vivamus molestie gravida turpis.',
+                    'Fusce lobortis lorem at ipsum semper sagittis.',
+                    'Nam convallis pellentesque nisl.',
+                    'Integer malesuada commodo nulla.'];
+    var constdurationTime = 500;
+    var durationTime = constdurationTime;
+    var prevFundData = 0, prevFundDataRequested = 0, prevPieData = 0, prevPieDataApproved = 0, prevAudienceData = 0;
+    var prevFundTaData = 0, prevFundTaDataApproved = 0;
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+</script>
+<script src="js/PieChart.js"></script>
+<script src="js/PieChartApproved.js"></script>
+<script src="js/FundChart.js"></script>
+<script src="js/FundChartRequested.js"></script>
+<script src="js/FundRight.js"></script>
+<script src="js/SupportedLeft.js"></script>
+<script src="js/SupportedChart.js"></script>
+<script src="js/AudienceChart.js"></script>
+<script src="js/PatientChart.js"></script>
+<script src="js/GrantChart.js"></script>
+<script src="js/FundSupportedChart.js"></script>
+<script src="js/NqsChart.js"></script>
+<script src="js/FundTaLeft.js"></script>
+<script src="js/FundTaChart.js"></script>
+<script src="js/FundTaChartApproved.js"></script>
+<script src="js/LearnersChart.js"></script>
+<script src="js/MapChart.js"></script>
+<script src="js/WorldMapChart.js"></script>
+<script src="js/ListChart.js"></script>
+<script>
+	var PI = 3.141592;
+
+	function draw(){
+		var i;
+	}
+
+    function convertKM(num){
+        if(num < 1000){
+            return num;
+        }else if(num >= 1000){
+            return parseInt(num/1000)+"K";
+        }else if(num >= 1000000){
+            return parseInt(num/1000000)+"M";
+        }  
+    }
+
+    function convertPN(num){
+        if(num > 0) return 1;
+        return -1;
+    }
+
+    function drawWorldMap(){
+        $( "#worldmap_div" ).dialog();
+        $("#worldmap_div").dialog( "option", "width", containerWidth/20*19);
+        $("#worldmap_div").dialog( "option", "height", containerHeight/4*3);
+
+        var worldmapchart = new WorldMapChart();
+        worldmapchart.width = parseInt(containerWidth/20*18);
+        worldmapchart.height = parseInt(containerHeight/3*2);
+        worldmapchart.id = '#worldmap';
+        worldmapchart.tabIndex = 0;
+        worldmapchart.fileName = 'data/Learners1.csv';
+        worldmapchart.draw();
+    }
+
+    function drawUsMap(){
+        $( "#usmap_div" ).dialog();
+        $("#usmap_div").dialog( "option", "width", containerWidth/20*19);
+        $("#usmap_div").dialog( "option", "height", containerHeight/4*3);
+
+        var mapchart = new MapChart();
+        mapchart.width = parseInt(containerWidth/20*18);
+        mapchart.height = parseInt(containerHeight/3*2);
+        mapchart.id = '#usmap';
+        mapchart.tabIndex = 0;
+        mapchart.fileName = 'data/Learners1.csv';
+        mapchart.draw();
+    }
+
+    function drawPrint(){
+        $( "#print_div" ).dialog();
+        $("#print_div").dialog( "option", "width", containerWidth/20*19);
+        $("#print_div").dialog( "option", "height", containerHeight/4*3);
+
+        var listchart = new ListChart();
+        listchart.width = parseInt(containerWidth/20*18);
+        listchart.height = parseInt(containerHeight/3*2);
+        listchart.id = '#print';
+        listchart.tabIndex = tabIndex;
+        listchart.draw();
+    }
+
+    function drawWeb(){
+        $( "#web_div" ).dialog();
+        $("#web_div").dialog( "option", "width", containerWidth/20*19);
+        $("#web_div").dialog( "option", "height", containerHeight/4*3);
+
+        var listchart = new ListChart();
+        listchart.width = parseInt(containerWidth/20*18);
+        listchart.height = parseInt(containerHeight/3*2);
+        listchart.id = '#web';
+        listchart.tabIndex = tabIndex;
+        listchart.draw();
+    }
+
+    function Init(tabIndex){
+        // $('svg').html('');
+
+        containerHeight = 900;
+        containerWidth = window.innerWidth/10*9-50;
+        // containerWidth = parseInt(containerHeight*14/15);
+        var labelWidth =  parseInt(containerWidth/5);
+        var tabWidth = parseInt(containerWidth*109/750);
+        var tabMargin = parseInt(tabWidth*7/110);
+        var headerPadding = 10;
+        $('.header').css('padding',(headerPadding)+"px");
+
+        var dateMarginLeft = containerWidth-labelWidth-headerPadding*2;
+        $('.container').css("width",containerWidth+"px");
+        $('.container').css("min-height",containerHeight+"px");
+        $('.header label').css("width",labelWidth+"px");
+        $('.date').css("margin-left",dateMarginLeft+"px");
+        $('.tab label').css("width",tabWidth+"px");
+        $('.tab .margin_tab').css("margin-left",tabMargin+"px");
+
+        var garphDivWidth = parseInt(containerWidth*336/700);
+        graphDivHeight = parseInt(garphDivWidth*150/334);
+        var graphDivMargin = parseInt(graphDivHeight*28/336);
+        $('.row1 .graph_div').css("width",garphDivWidth+"px");
+        $('.graph_div').css("height",graphDivHeight+"px");
+        $('.graph_div.margin_tab').css("margin-left",graphDivMargin+"px");
+
+        var garphDivWidth1 = parseInt(containerWidth*451/700);
+        garphDivWidth2 = parseInt(containerWidth*219/700);
+        $('.row2 .graph_div1').css("width",garphDivWidth1+"px");
+        $('.row2 .graph_div2').css("width",garphDivWidth2+"px");
+        $('.row3 .graph_div').css("width",garphDivWidth2+"px");
+        $('.row4 .graph_div').css("width",garphDivWidth2+"px");
+
+        var piechart = new PieChart();
+        piechart.width = piechart.height = parseInt(graphDivHeight*120/135);
+        piechart.id = '#number_of_grants_requested';
+        piechart.header_text = "Requested";
+        piechart.fileName = "data/Number_of_Grants.csv";
+        piechart.tabIndex = tabIndex;
+        piechart.draw();
+
+        var piechart = new PieChartApproved();
+        piechart.width = piechart.height = parseInt(graphDivHeight*120/135);
+        piechart.id = '#number_of_grants_approved';
+        piechart.header_text = "Approved";
+        piechart.fileName = "data/Number_of_Grants.csv";
+        piechart.tabIndex = tabIndex;
+        piechart.draw();
+
+        DrawFundChart();
+
+        DrawFundRight();
+
+        var supportedLeft = new SupportedLeft();
+        supportedLeft.width = parseInt(graphDivHeight*120/135/4);
+        supportedLeft.height = parseInt(graphDivHeight*120/135);
+        supportedLeft.id = '#supported_left';
+        supportedLeft.tabIndex = tabIndex;
+        supportedLeft.draw();
+
+        var supprotedchart = new SupportedChart();
+        supprotedchart.width = parseInt(graphDivHeight*120/135);
+        supprotedchart.height = parseInt(graphDivHeight*120/135);
+        supprotedchart.id = '#supported_live';
+        supprotedchart.tabIndex = tabIndex;
+        supprotedchart.Ind = 0;
+        supprotedchart.fileName = 'data/Supported.csv';
+        supprotedchart.draw();
+
+        var supprotedchart = new SupportedChart();
+        supprotedchart.width = parseInt(graphDivHeight*120/135);
+        supprotedchart.height = parseInt(graphDivHeight*120/135);
+        supprotedchart.id = '#supported_print';
+        supprotedchart.tabIndex = tabIndex;
+        supprotedchart.Ind = 1;
+        supprotedchart.fileName = 'data/Supported.csv';
+        supprotedchart.draw();
+
+        var supprotedchart = new SupportedChart();
+        supprotedchart.width = parseInt(graphDivHeight*120/135);
+        supprotedchart.height = parseInt(graphDivHeight*120/135);
+        supprotedchart.id = '#supported_web';
+        supprotedchart.tabIndex = tabIndex;
+        supprotedchart.Ind = 2;
+        supprotedchart.fileName = 'data/Supported.csv';
+        supprotedchart.draw();
+
+        var audiencechart = new AudienceChart();
+        audiencechart.width  = parseInt(garphDivWidth);
+        audiencechart.height = parseInt(graphDivHeight);
+        audiencechart.id = '#audience';
+        if(tabIndex == 0) {
+            audiencechart.fileName = "data/Audience_Total.csv";
+        }else{
+            audiencechart.fileName = "data/Audience_Each.csv";
+        }
+        audiencechart.tabIndex = tabIndex;
+        audiencechart.draw();
+
+        var patientchart = new PatientChart();
+        patientchart.width = parseInt(garphDivWidth2);
+        patientchart.height = parseInt(graphDivHeight*120/135);
+        patientchart.id = '#patient';
+        if(tabIndex == 0) {
+            patientchart.fileName = "data/Audience_Total.csv";
+        }else{
+            patientchart.fileName = "data/Audience_Each.csv";
+        }
+        patientchart.tabIndex = tabIndex;
+        patientchart.draw();
+
+        DrawGrantChart();
+
+        var fundsupportedchart = new FundSupportedChart();
+        fundsupportedchart.width = parseInt(garphDivWidth2);
+        fundsupportedchart.height = parseInt(graphDivHeight*113/135);
+        fundsupportedchart.id = '#fund_supported';
+        fundsupportedchart.tabIndex = tabIndex;
+        fundsupportedchart.Ind = 0;
+        fundsupportedchart.fileName = 'data/Funds_Supported.csv';
+        fundsupportedchart.draw();
+
+        if(tabIndex != 0){
+
+            NqsDrawChart();
+
+            var fundtaleft = new FundTaLeft();
+            fundtaleft.width = parseInt(graphDivHeight*50/135);
+            fundtaleft.height = parseInt(graphDivHeight*120/135);
+            fundtaleft.id = '#funds_ta_left';
+            fundtaleft.tabIndex = tabIndex;
+            fundtaleft.draw();
+
+            var fundtachart = new FundTaChart();
+            fundtachart.width = parseInt(graphDivHeight*80/135);
+            fundtachart.height = parseInt(graphDivHeight*120/135);
+            fundtachart.id = '#funds_ta_requested';
+            fundtachart.header_text = "Requested";
+            fundtachart.fileName = "data/Funds_Ta"+tabIndex+"_Requested.csv";
+            fundtachart.tabIndex = tabIndex;
+            fundtachart.draw();
+
+            var fundtachart = new FundTaChartApproved();
+            fundtachart.width = parseInt(graphDivHeight*80/135);
+            fundtachart.height = parseInt(graphDivHeight*120/135);
+            fundtachart.id = '#funds_ta_approved';
+            fundtachart.header_text = "Approved";
+            fundtachart.fileName = "data/Funds_Ta"+tabIndex+"_Approved.csv";
+            fundtachart.tabIndex = tabIndex;
+            fundtachart.draw();
+
+            var learnerschart = new LearnersChart();
+            learnerschart.width = parseInt(garphDivWidth2);
+            learnerschart.height = parseInt(graphDivHeight*113/135);
+            learnerschart.id = '#learners';
+            learnerschart.tabIndex = tabIndex;
+            learnerschart.fileName = 'data/Learners'+tabIndex+'.csv';
+            learnerschart.draw();
+        }
+    }
+
+    function DrawGrantChart(){
+        var grantchart = new GrantChart();
+        grantchart.width = parseInt(garphDivWidth2);
+        grantchart.height = parseInt(graphDivHeight*113/135);
+        grantchart.id = '#grant';
+        grantchart.tabIndex = tabIndex;
+        grantchart.Ind = 0;
+        grantchart.fileName = 'data/Grant.csv';
+        grantchart.draw();
+    }
+
+    function DrawFundRight(){
+        var fundright = new FundRight();
+        fundright.width = parseInt(graphDivHeight*120/135*2/3);
+        fundright.height = parseInt(graphDivHeight*120/135);
+        fundright.id = '#funds_right';
+        fundright.tabIndex = tabIndex;
+        fundright.ind = FundRightInd;
+        fundright.draw();
+    }
+
+    function NqsDrawChart(){
+        var nqschart = new NqsChart();
+        nqschart.width = parseInt(garphDivWidth2);
+        nqschart.height = parseInt(graphDivHeight*113/135);
+        nqschart.id = '#nqs';
+        nqschart.tabIndex = tabIndex;
+        nqschart.Ind = NqsInd;
+        nqschart.fileName = 'data/Nqs.csv';
+        nqschart.draw();
+    }
+
+    function DrawFundChart(){
+        var fundchart = new FundChartRequested();
+        fundchart.width = fundchart.height = parseInt(graphDivHeight*120/135);
+        fundchart.id = '#funds_requested';
+        fundchart.header_text = "Requested";
+        fundchart.fileName = "data/Funds_Requested.csv";
+        fundchart.tabIndex = tabIndex;
+        fundchart.draw();
+
+        var fundchart = new FundChart();
+        fundchart.width = fundchart.height = parseInt(graphDivHeight*120/135);
+        fundchart.id = '#funds_approved';
+        fundchart.header_text = "Approved";
+        fundchart.fileName = "data/Funds_Approved.csv";
+        fundchart.tabIndex = tabIndex;
+        fundchart.draw();
+    }
+
+	$(document).ready(function(){
+
+        tabIndex = 0;
+        Init(tabIndex);
+        $('#worldmap_div').hide();
+        $('#usmap_div').hide();
+        $('#print_div').hide();
+        $('#web_div').hide();
+        if(tabIndex == 0) {
+            $('.row4').hide();
+            $('.total_ta').css('background-color',TabColors[0]);
+            $('.ta1').css('background-color',TabColors[1]);
+            $('.ta2').css('background-color',TabColors[2]);
+            $('.ta3').css('background-color',TabColors[3]);
+            $('.ta4').css('background-color',TabColors[4]);
+            $('.ta5').css('background-color',TabColors[5]);
+            $('#worldmap_div').attr('title','Total International Meetings');
+            $('#usmap_div').attr('title','Total National Meetings');
+            $('#usmap_div').attr('title','Total Print Education');
+        }else if(tabIndex == 1){
+            $('.ta1').css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA1 International Meetings');
+            $('#usmap_div').attr('title','TA1 National Meetings');
+            $('#usmap_div').attr('title','TA1 Print Education');
+        }else if(tabIndex == 2){
+            $('.ta2').css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA2 International Meetings');
+            $('#usmap_div').attr('title','TA2 National Meetings');
+            $('#usmap_div').attr('title','TA2 Print Education');
+        }else if(tabIndex == 3){
+            $('.ta3').css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA3 International Meetings');
+            $('#usmap_div').attr('title','TA3 National Meetings');
+            $('#usmap_div').attr('title','TA3 Print Education');
+        }else if(tabIndex == 4){
+            $('.ta4').css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA4 International Meetings');
+            $('#usmap_div').attr('title','TA4 National Meetings');
+            $('#usmap_div').attr('title','TA4 Print Education');
+        }else if(tabIndex == 5){
+            $('.ta5').css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA5 International Meetings');
+            $('#usmap_div').attr('title','TA5 National Meetings');
+            $('#usmap_div').attr('title','TA5 Print Education');
+        }
+
+        $('.total_ta').click(function(){
+            durationTime = constdurationTime;
+            tabIndex = 0;
+            $('.total_ta').css('background-color',TabColors[0]);
+            $('.ta1').css('background-color',TabColors[1]);
+            $('.ta2').css('background-color',TabColors[2]);
+            $('.ta3').css('background-color',TabColors[3]);
+            $('.ta4').css('background-color',TabColors[4]);
+            $('.ta5').css('background-color',TabColors[5]);
+            $('.row4').hide();
+            $('#worldmap_div').attr('title','Total International Meetings');
+            $('#usmap_div').attr('title','Total National Meetings');
+            $('#usmap_div').attr('title','Total Print Education');
+            Init(tabIndex);
+        });
+
+        $('.ta1').click(function(){
+            durationTime = constdurationTime;
+            tabIndex = 1;
+            $('.tab label').css('background-color',defaultTabColor);
+            $(this).css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA1 International Meetings');
+            $('#usmap_div').attr('title','TA1 National Meetings');
+            $('#usmap_div').attr('title','TA1 Print Education');
+            Init(tabIndex);
+            $('.row4').show();
+        });
+
+        $('.ta2').click(function(){
+            durationTime = constdurationTime;
+            tabIndex = 2;
+            $('.tab label').css('background-color',defaultTabColor);
+            $(this).css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA2 International Meetings');
+            $('#usmap_div').attr('title','TA2 National Meetings');
+            $('#usmap_div').attr('title','TA2 Print Education');
+            Init(tabIndex);
+            $('.row4').show();
+        });
+
+        $('.ta3').click(function(){
+            durationTime = constdurationTime;
+            tabIndex = 3;
+            $('.tab label').css('background-color',defaultTabColor);
+            $(this).css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA3 International Meetings');
+            $('#usmap_div').attr('title','TA3 National Meetings');
+            $('#usmap_div').attr('title','TA3 Print Education');
+            Init(tabIndex);
+            $('.row4').show();
+        });
+
+        $('.ta4').click(function(){
+            durationTime = constdurationTime;
+            tabIndex = 4;
+            $('.tab label').css('background-color',defaultTabColor);
+            $(this).css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA4 International Meetings');
+            $('#usmap_div').attr('title','TA4 National Meetings');
+            $('#usmap_div').attr('title','TA4 Print Education');
+            Init(tabIndex);
+            $('.row4').show();
+        });
+
+        $('.ta5').click(function(){
+            durationTime = constdurationTime;
+            tabIndex = 5;
+            $('.tab label').css('background-color',defaultTabColor);
+            $(this).css('background-color',TabColors[tabIndex]);
+            $('#worldmap_div').attr('title','TA5 International Meetings');
+            $('#usmap_div').attr('title','TA5 National Meetings');
+            $('#usmap_div').attr('title','TA5 Print Education');
+            Init(tabIndex);
+            $('.row4').show();
+        });
+	});
+
+	$(window).resize(function(){
+        durationTime = 0;
+        WindowResizeFlag = 0;
+        if(window.innerWidth >= 800){
+            Init(tabIndex);
+        }
+	})
+
+</script>

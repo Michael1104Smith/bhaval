@@ -1,0 +1,51 @@
+US_State,Value
+"Alabama,AL",2000
+"Alaska,AK",4000
+"Arizona,AZ",3000
+"Arkansas,AR",3000
+"California,CA",2000
+"Colorado,CO",3000
+"Connecticut,CT",3000
+"Delaware,DE",1000
+"Florida,FL",3000
+"Georgia,GA",1000
+"Hawaii,HI",3000
+"Idaho,ID",3000
+"Illinois,IL",1000
+"Indiana,IN",1000
+"Iowa,IA",1000
+"Kansas,KS",1000
+"Kentucky,KY",1000
+"Louisiana,LA",1000
+"Maine,ME",4000
+"Maryland,MD",1000
+"Massachusetts,MA",1000
+"Michigan,MI",1000
+"Minnesota,MN",1000
+"Mississippi,MS",1000
+"Missouri,MO",1000
+"Montana,MT",1000
+"Nebraska,NE",4000
+"Nevada,NV",2
+"New Hampshire,NH",
+"New Jersey,NJ",2
+"New Mexico,NM",
+"New York,NY",2
+"North Carolina,NC",2
+"North Dakota,ND",2
+"Ohio,OH",1000
+"Oklahoma,OK",500
+"Oregon,OR",500
+"Pennsylvania,PA",500
+"Rhode Island,RI",500
+"South Carolina,SC",4000
+"South Dakota,SD",4000
+"Tennessee,TN",500
+"Texas,TX",1000
+"Utah,UT",500
+"Vermont,VT",500
+"Virginia,VA",500
+"Washington,WA",4000
+"West Virginia,WV",0
+"Wisconsin,WI",0
+"Wyoming,WY",1
